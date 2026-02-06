@@ -150,14 +150,88 @@ fun main() {
         while 문도 동이랗게 제공함
         
 ## List
+    val items = listOf(1,2,3,4,5) // 변경이 안되는 리스트
+
+    val itmes2 = mutableListOf(1,2,3,4,5)
+    itmes2.add(6)
+    itmes2.remove(3)
+
+    타입은 다 생략이 된다.
+    코틀린은 타입이 생략가능한것이기 때문, 타입을 추론함
+
 
 ## Array
+val items = arrayOf(1,2,3)
+    items.set(0, 10) // 자바 형식
 
+    items[0] = 10 // 코틀린형식
+
+    // 배열은 잘 안쓰니까 왠만하면 리스트 사용하기
+    
 ## Null Safety
+코틀린에서는 널을 넣을려면 ? 를 대입해야함
+? 여부에 따라서 타입이 다르게 된다.
+널체크를 하거나 강제타입변환해야함
+
+    var name : String? = null
+    name = "seulgi"
+
+    name = null
+
+    var name2 : String = ""
+
+    name2 = name!! // 강제로 타입 때기 -> 에러나면 개발자 책임이ㅣㄱ 때문에 널체크해야함
+
+    // if 문으로 널체크 하기
+    if (name != null) {
+        name2 = name
+    }
+
+    // 널체크 문법
+    name?.let {
+        name2 = name
+    }
 
 ## 함수
 
+fun main() {
+    print(sum(10, 20))
+
+}
+
+fun sum(a:Int, b:Int): Int {
+    return a+b
+}
+
+or
+
+fun sum(a:Int, b:Int): Int = a+b 
+
+함수는 탑레벨 함수이기 때문에 어느 파일에서나 사용가능
+
+자바는 오버로드를 통해서 같은 함수명에 다른 파라미터가 가능
+fun sum(a:Int, b:Int, c: Int = 0): Int = a+b+c
+코틀린에서는 디폴트값을 지정해서 가능
+
+fun main() {
+    print(sum(a = 10, b = 20))
+
+}
+
+이렇게 입력 파라미터를 명시적으로 지정이 가능하기 때문에 틀리기 쉽지않고 가독성도 좋다.
+
 ## Class
+
+fun main() {
+    val john = Person("John", 20)
+    print(john.name)
+    print(john.age)
+}
+
+class Person(val name:String, var age: Int)
+
+val 로 선언한건 수정 불가능, var 로 만든건 수정 가능
+val과 var 를 통해서 getter, setter 효과를 구현할 수 있다.
 
 ## data class
 
