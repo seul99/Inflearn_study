@@ -234,21 +234,185 @@ val 로 선언한건 수정 불가능, var 로 만든건 수정 가능
 val과 var 를 통해서 getter, setter 효과를 구현할 수 있다.
 
 ## data class
+class Person(
+    private val name:String, var age: Int)
+
+    이렇게 private 을 붙이면 접근이 불가능하다.
+    기본적으로는 public
+
+
 
 ## getter, setter
 
+fun main() {
+    val john = Person("John", 20)
+    val john2 = Person("John", 20)
+    println(john)
+    println(john2)
+    print(john == john2)
+}
+com.mysite.Person@31befd9f
+com.mysite.Person@1c20c684
+false
+
+서로 해시값이 다르기 떄문에 == 비교 했을때 false 가 나옴
+
+data class Person(
+    private val name:String, var age: Int)
+
+    클래스에 data 를 추가하면?
+
+    Person(name=John, age=20)
+Person(name=John, age=20)
+true
+
+이렇게 정리가 되서 출력됨
+
+fun main() {
+    val john = Person("John", 20)
+    val john2 = Person("John", 20)
+    println(john)
+    println(john2)
+    print(john == john2)
+
+    john.hobby = "야구"
+}
+
+class Person(
+    private val name:String, var age: Int) {
+
+    var hobby = "축구"
+
+
+    init {
+
+        print("init")
+    }
+
+    fun some() {
+        hobby = "농구"
+    }
+}
+
+
+
 ## getter, setter 제어
+
+    var hobby = "축구"
+        private set
+
+이렇게 하면 외부에서 접근 불가능해짐
+        var hobby = "축구"
+            private set
+            get() = "취미: $field" 
+        이렇게 재 정
+
 
 ## 상속 extends
 
+자바는 기본적으로 모든게 허용
+코틀린은 닫혀있음 상속이 안됨
+open 으로 오버라이드를 풀어줘야
+
+open class Person 
+abstract class Animal {
+    open fun move() {
+        print("이동")
+    }
+}
+
+class SuperMan : Person() 
+
+
+class Dog : Animal(){
+    override fun move() {
+        println("껑충껑충")
+    }
+}
+
+class Cat : Animal() {
+    override fun move() {
+        println("슬금슬금")
+    }
+}
+
+상속이 가능하다.
+
 ## interface
 
+interface Drawable {
+    fun draw()
+}
+abstract class Animal {
+    open fun move() {
+        print("이동")
+    }
+}
+
+class Dog : Animal(), Drawable{
+    override fun move() {
+        println("껑충껑충")
+    }
+
+    override fun draw() {}
+}
+
+
+인터페이스는 콤마찍고 뒤에 이어서 상속 가
+
 ## 타입 체크 is
+    // 타입 체크
+    if(dog is Dog) {
+        println("멍멍이")
+    }
+    if(dog is Animal) {
+        println("멍멍이")
+    }
+
+    if(dog is Cat) {
+        println("멍멍이")
+    }
+
 
 ## 강제 타입 변환 as
 
+cat as Dog
+
+제너릭 선언 사용
+fun main() {
+    val box = Box(10)
+    val box2 = Box("dfdfdf")
+
+    print(box.value)
+}
+
+class Box<T>(var value: T) {
+
+}
+
+
 ## 콜백 합수(고차함수)
+fun main() {
+    myFunc (10){
+        println("함수 호출")
+    }
+}
+
+fun myFunc(a: Int,  callBack : () -> Unit = {}) {
+    println("함수 시작!!!")
+    callBack()
+    println("함수 끝")
+}
+
 
 ## 코루틴
+suspend 붙은 함수는 일반적으로 main에서 그냥 호출이 불가
+lifecycleScope.launch {
+        myFunc(10){
+            
+        }
+    }
 
+    이렇게 해야 사용가능
 
+    의존성 주입 추가 필수
